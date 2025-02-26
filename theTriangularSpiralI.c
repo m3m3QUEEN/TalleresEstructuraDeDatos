@@ -9,7 +9,7 @@ int main() {
     
     if (n == 1) {
         printf("0 0\n");
-        return;
+        return 0;
     }
     
     long long k = 1;
@@ -24,7 +24,7 @@ int main() {
     // Parte inferior
     if (n <= prev_points + (4 * k - 2)) {
         printf("%lld %lld\n", x - (n - pos), y);
-        return;
+        return 0;
     }
     
     pos += (4 * k - 2);
