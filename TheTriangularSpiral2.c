@@ -1,54 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-long long valor_absoluto(long long numero) {
-    return (numero < 0) ? -numero : numero;
-}
-
 int main() {
-    long long coord_x, coord_y;
-    printf("Ingrese la coordenada (x y): ");
-    scanf("%lld %lld", &coord_x, &coord_y);
-
-    if (coord_x == 0 && coord_y == 0) {
-        printf("1\n");
-        return 0;
-    }
-
-    long long nivel_espiral = valor_absoluto(coord_y) + valor_absoluto(coord_x);
-    if (coord_y > 0) {
-        nivel_espiral = coord_y + valor_absoluto(coord_x);
-    } else {
-        nivel_espiral = -coord_y + 1;
-        long long auxiliar = (-4 * coord_y + 3) / 2;
-        if (valor_absoluto(coord_x) > auxiliar) {
-            nivel_espiral += valor_absoluto(coord_x) - auxiliar;
+    long long num_cases = 1;
+    scanf("%lld", &num_cases);  
+    
+    while (num_cases--) {
+        long long coord_x, coord_y;
+        scanf("%lld %lld", &coord_x, &coord_y);
+        
+        long long level;
+        if (coord_y > 0) {
+            level = coord_y + llabs(coord_x);
+        } else {
+            level = -coord_y + 1;
+            long long offset = (-4 * coord_y + 3) / 2;
+            if (llabs(coord_x) > offset) {
+                level += llabs(coord_x) - offset;
+            }
         }
+        
+        long long result = 4 * (level - 1) * (level - 1);  
+        long long y_start = -level + 1, x_start = 2 * level - 2;  
+        
+        if (y_start == coord_y) {
+            if (coord_x == 2 * level - 1) result = 4 * level * level;
+            result += x_start - coord_x + 1;
+            printf("%lld\n", result);
+            continue;
+        }
+        
+        result += 4 * level - 2;
+        x_start -= 4 * level - 3;
+        if (coord_x - x_start == coord_y - y_start) {
+            result += coord_x - x_start;
+            printf("%lld\n", result);
+            continue;
+        }
+        
+
+        x_start += 2 * level - 1;
+        y_start += 2 * level - 1;
+        result += 2 * level - 1;
+        result += coord_x - x_start;
+        printf("%lld\n", result);
     }
-
-    long long puntos_previos = 4 * (nivel_espiral - 1) * (nivel_espiral - 1);
-
-    long long primer_x = 2 * nivel_espiral - 2, primer_y = -nivel_espiral + 1;
-
-    if (primer_y == coord_y) {
-        long long termino_n = puntos_previos + (primer_x - coord_x) + 1;
-        printf("%lld\n", termino_n);
-        return 0;
-    }
-
-    puntos_previos += (4 * nivel_espiral - 2);
-    primer_x -= (4 * nivel_espiral - 3);
-    if (coord_x - primer_x == coord_y - primer_y) {
-        long long termino_n = puntos_previos + (coord_x - primer_x);
-        printf("%lld\n", termino_n);
-        return 0;
-    }
-
-    puntos_previos += (2 * nivel_espiral - 2);
-    primer_x += (2 * nivel_espiral - 1);
-    primer_y += (2 * nivel_espiral - 1);
-    long long termino_n = puntos_previos + (coord_x - primer_x);
-    printf("%lld\n", termino_n);
 
     return 0;
 }

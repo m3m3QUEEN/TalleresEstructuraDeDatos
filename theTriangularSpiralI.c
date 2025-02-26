@@ -4,7 +4,6 @@
 
 int main() {
     long long n;
-    printf("Ingrese el n-esimo termino para conocer su coordenada: ");
     scanf("%lld", &n);
     
     if (n == 1) {
@@ -33,7 +32,7 @@ int main() {
     // Diagonal izquierda
     if (n <= pos + (2 * k - 2)) {
         printf("%lld %lld\n", x + (n - pos), y + (n - pos));
-        return;
+        return 0;
     }
     
     pos += (2 * k - 2);
